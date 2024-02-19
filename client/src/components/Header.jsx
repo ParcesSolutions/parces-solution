@@ -12,7 +12,7 @@ function Header() {
       </Link>
       <div className='flex gap-2 md:order-2'>
         <Link to='/sign-in'>
-          <Button className='bg-blue-800 hover:bg-blue-900 focus:ring-2 focus:ring-blue-500 text-white' color='hover:bg-blue-900' pill>
+          <Button className='bg-blue-800 hover:bg-blue-900 focus:ring-2 focus:ring-blue-500 text-white' outline color='hover:bg-blue-900' pill>
             Sign In
           </Button>
         </Link>
