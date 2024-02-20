@@ -29,6 +29,11 @@ function Header() {
               Projects
             </Link>
           </Navbar.Link>
+          <Navbar.Link active={path === "/uniform-portal"}>
+            <Link to='/uniform-portal'>
+              Uniform Portal
+            </Link>
+          </Navbar.Link>
         </Navbar.Collapse>
     </Navbar>
   )
