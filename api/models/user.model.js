@@ -6,6 +6,11 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    employee_number: {
+        type: Number,
+        required: true,
+        unique: true,
+    },
     firstname: {
         type: String,
         required: true
@@ -19,7 +24,31 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    password: {
+    address: {
+        type: String,
+        required: true,
+    },
+    shirt_size: {
+        type: String,
+        required: true,
+    },
+    sweatshirt_size: {
+        type: String,
+        required: true,
+    },
+    shorts_width: {
+        type: Number,
+        required: true,
+    },
+    pants_width: {
+        type: Number,
+        required: true,
+    },
+    pants_length: {
+        type: Number,
+        required: true,
+    },
+    gender: {
         type: String,
         required: true,
     }
