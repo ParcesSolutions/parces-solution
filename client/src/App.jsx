@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import Projects from './pages/Projects'
 import Header from './components/Header'
 import VolvoUniformPortal from './pages/VolvoUniformPortal'
+import SignUp from './pages/SignUp'
 
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sign-in" element={<SignIn/>} />
+        <Route path="/sign-up" element={<SignUp/>} />
         <Route path="/projects" element={<Projects/>} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/uniform-portal" element={<VolvoUniformPortal />} />
