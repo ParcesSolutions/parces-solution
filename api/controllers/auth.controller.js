@@ -4,8 +4,6 @@ import bcrypt from 'bcryptjs';
 export const signup = async (req, res, next) => {
     const { a_number, employee_number, password, firstname, lastname, email, address, shirt_size, sweatshirt_size, shorts_width, pants_width, pants_length, gender } = req.body;
 
-    
-
     /* encrypt password for security */
     const salt = bcrypt.genSaltSync(10);
     const hashPassword = bcrypt.hashSync(password, salt); 
@@ -34,6 +32,4 @@ export const signup = async (req, res, next) => {
     } catch (error) {
         next(error);    
     }
-
-
 }

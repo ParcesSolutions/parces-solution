@@ -76,7 +76,7 @@ function SignUp() {
     }
   
   return (
-    <div className='min-h-screen mt-20 flex justify-center'>
+    <div className='min-h-screen mt-20 mb-20 flex justify-center'>
         <div className=''>
             <div className='p-3 max-w-3xl mx-auto md:items-center'>
                 <div className='flex justify-center items-center'>
