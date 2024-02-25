@@ -1,28 +1,77 @@
+'use client'
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import parces_small_logo from '../logo/parces_small_logo.jpg';
-import { Button, Label, TextInput } from 'flowbite-react';
+import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
 
 function SignUp() {
-  const [formData, setFormData] = useState({});
 
-    /* Keep track of input in field. keep previous inputs for other fields, save inputs for each field Id */
+  /* state to manage form data */
+  const [formData, setFormData] = useState({});
+  /* state to manage form data errors */
+  const [errorMessage, setErrorMessage] = useState(null);
+  /* state to manage loading when submitting form */
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+   /* Keep track of input in field. keep previous inputs for other fields, save inputs for each field Id */
    const handleChange = (e) => {
-    setFormData({...formData, [e.target.id]: e.target.value});
-   }; 
+    setFormData({...formData, [e.target.id]: e.target.value.trim()});
+   };
     
     /* handle submission of form data */
     const handleSubmit = async (e) => {
+
         e.preventDefault(); /* prevents form from refreshing */
+
+        if(formData.password == null){
+            return setErrorMessage('Password must be filled in');
+        }
+        else if (!formData.a_number || 
+            !formData.employee_number || 
+            !formData.password || 
+            !formData.firstname || 
+            !formData.lastname || 
+            !formData.email || 
+            !formData.address || 
+            !formData.shirt_size || 
+            !formData.sweatshirt_size || 
+            !formData.shorts_width || 
+            !formData.pants_width || 
+            !formData.pants_length || 
+            !formData.gender) {
+            return setErrorMessage('Please fill out all fields');
+        }
+        else if(formData.confirmPassword == formData.password){
+            return setErrorMessage('Passwords do not match. Please try again.');
+        }
+        else if(formData.confirmPassword == null){
+            return setErrorMessage('Please confirm password');
+        }
+
         try {
+            setLoading(true);
+            setErrorMessage(null); // removes previous error message if any during new submission
             const res = await fetch('/api/auth/uniform-signup', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(formData)
             });
+
             const data = await res.json();
-        } catch (error) {
+
+            if (data.success === false) {
+                return setErrorMessage(data.message);
+            }
+
+            setLoading(false);
             
+            if (res.ok) {
+                navigate('/sign-in');
+            }
+        } catch (error) {
+            setErrorMessage(error.message);
+            setLoading(false);
         }
     }
   
@@ -95,7 +144,7 @@ function SignUp() {
                             <Label value='Password' />
                             <TextInput 
                                 type='password'
-                                placeholder='•••••••••'
+                                // placeholder='•••••••••'
                                 id='password'
                                 onChange={handleChange}
                             />
@@ -104,7 +153,7 @@ function SignUp() {
                             <Label value='Confirm Password' />
                             <TextInput 
                                 type='password'
-                                placeholder='•••••••••'
+                                // placeholder='•••••••••'
                                 id='confirmPassword'
                                 onChange={handleChange}
                             />
@@ -179,14 +228,28 @@ function SignUp() {
                             />
                         </div>
                     </div>
-                    <Button type='submit' className='bg-blue-800 text-white mt-8 px-10 py-1.5 mx-auto hover:bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700'>
-                        Create Account
+                    <Button type='submit' className='bg-blue-800 text-white mt-8 px-10 py-1.5 mx-auto hover:bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700' disabled={loading}>
+                        {
+                            loading ? (
+                                <>
+                                    <Spinner size='sm' />
+                                    <span className='pl-3'>Loading...</span>
+                                </>
+                            ) : 'Create Account'
+                        }
                     </Button>
                 </form>
                 <div className='mt-4 flex gap-1 justify-center'>
-                    <p className=''>Already have an account?</p>
+                    <p>Already have an account?</p>
                     <Link to='/sign-in' className='text-blue-600 font-bold'>Sign In</Link>
                 </div>
+                {
+                    errorMessage && (
+                        <Alert className='mt-5 w-80 mx-auto' color='failure'>
+                             {errorMessage}
+                        </Alert>
+                    )
+                }
             </div>
         </div>
     </div>
