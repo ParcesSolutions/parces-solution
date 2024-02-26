@@ -42,9 +42,9 @@ function SignUp() {
             !formData.gender) {
             return setErrorMessage('Please fill out all fields');
         }
-        else if(formData.confirmPassword == formData.password){
-            return setErrorMessage('Passwords do not match. Please try again.');
-        }
+        // else if(formData.confirmPassword == formData.password){
+        //     return setErrorMessage('Passwords do not match. Please try again.');
+        // }
         else if(formData.confirmPassword == null){
             return setErrorMessage('Please confirm password');
         }
@@ -59,7 +59,9 @@ function SignUp() {
             });
 
             const data = await res.json();
-
+            if(formData.confirmPassword === formData.password){
+                return setErrorMessage('Passwords do not match. Please try again.');
+            }
             if (data.success === false) {
                 return setErrorMessage(data.message);
             }
@@ -102,7 +104,7 @@ function SignUp() {
                         <div>
                             <Label value='Your Volvo Employee Number' />
                             <TextInput 
-                                type='number'
+                                type='text'
                                 placeholder='Employee Number'
                                 id='employee_number'
                                 onChange={handleChange}
