@@ -15,7 +15,6 @@ export const signup = async (req, res, next) => {
         a_number, 
         employee_number, 
         firstname,
-        // password,
         password: hashPassword, 
         lastname, 
         email, 

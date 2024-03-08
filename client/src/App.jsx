@@ -22,7 +22,7 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/uniform-portal" element={<VolvoUniformPortal />} />
       </Routes>
-        <FooterCom />
+      <FooterCom />
     </BrowserRouter>
   )
 }
