@@ -59,7 +59,7 @@ function SignUp() {
             });
 
             const data = await res.json();
-            if(formData.confirmPassword === formData.password){
+            if(formData.confirmPassword != formData.password){
                 return setErrorMessage('Passwords do not match. Please try again.');
             }
             if (data.success === false) {

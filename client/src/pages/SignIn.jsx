@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import parces_small_logo from '../logo/parces_small_logo.jpg';
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
 
-function SignUp() {
+function SignIn() {
 
   /* state to manage form data */
   const [formData, setFormData] = useState({});
@@ -39,7 +39,7 @@ function SignUp() {
         try {
             setLoading(true);
             setErrorMessage(null); // removes previous error message if any during new submission
-            const res = await fetch('/api/auth/uniform-signup', {
+            const res = await fetch('/api/auth/uniform-signin', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(formData)
@@ -56,7 +56,7 @@ function SignUp() {
             setLoading(false);
             
             if (res.ok) {
-                navigate('/sign-in');
+                navigate('/uniforms');
             }
         } catch (error) {
             setErrorMessage(error.message);
@@ -89,7 +89,7 @@ function SignUp() {
                             />
                         </div>
                         <div>
-                            <Label value='Your Volvo Employee Number' />
+                            <Label value='Volvo Employee Number' />
                             <TextInput 
                                 type='text'
                                 placeholder='Employee Number'
@@ -117,7 +117,7 @@ function SignUp() {
                                     <Spinner size='sm' />
                                     <span className='pl-3'>Loading...</span>
                                 </>
-                            ) : 'Create Account'
+                            ) : 'Sign In'
                         }
                     </Button>
                 </form>
@@ -138,4 +138,4 @@ function SignUp() {
   )
 }
 
-export default SignUp
+export default SignIn
