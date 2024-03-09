@@ -3,15 +3,15 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import parces_small_logo from '../logo/parces_small_logo.jpg';
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
+import { useSelector, useDispatch } from 'react-redux'; //useSelector allows to access redux global variables
+import { signInSuccess, signInStart, signInFailure } from '../redux/user/userSlice';
 
 function SignIn() {
 
   /* state to manage form data */
   const [formData, setFormData] = useState({});
-  /* state to manage form data errors */
-  const [errorMessage, setErrorMessage] = useState(null);
-  /* state to manage loading when submitting form */
-  const [loading, setLoading] = useState(false);
+  const {loading, error: errorMessage} = useSelector(state => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
    /* Keep track of input in field. keep previous inputs for other fields, save inputs for each field Id */
@@ -25,20 +25,20 @@ function SignIn() {
         e.preventDefault(); /* prevents form from refreshing */
 
         if(formData.password == null){
-            return setErrorMessage('Password must be filled in');
+            return dispatch(signInFailure('Password must be filled in'));
         }
         else if (!formData.a_number || 
             !formData.employee_number || 
             !formData.password) {
-            return setErrorMessage('Please fill out all fields');
+
+            return dispatch(signInFailure('Please fill out all fields'));
         }
         // else if(formData.confirmPassword == formData.password){
         //     return setErrorMessage('Passwords do not match. Please try again.');
         // }
 
         try {
-            setLoading(true);
-            setErrorMessage(null); // removes previous error message if any during new submission
+            dispatch(signInStart());
             const res = await fetch('/api/auth/uniform-signin', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -46,21 +46,16 @@ function SignIn() {
             });
 
             const data = await res.json();
-            if(formData.confirmPassword === formData.password){
-                return setErrorMessage('Passwords do not match. Please try again.');
-            }
-            if (data.success === false) {
-                return setErrorMessage(data.message);
-            }
 
-            setLoading(false);
-            
+            if (data.success === false) {
+                dispatch(signInFailure(data.message));
+            }
             if (res.ok) {
+                dispatch(signInSuccess(data));
                 navigate('/uniforms');
             }
         } catch (error) {
-            setErrorMessage(error.message);
-            setLoading(false);
+            dispatch(signInFailure(error.message));
         }
     }
   
@@ -127,7 +122,7 @@ function SignIn() {
                 </div>
                 {
                     errorMessage && (
-                        <Alert className='mt-5 w-80 mx-auto' color='failure'>
+                        <Alert className='mt-5 w-80 mx-auto text-center' color='failure'>
                              {errorMessage}
                         </Alert>
                     )
