@@ -13,6 +13,7 @@ import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import Orders from './pages/Orders';
 import Users from './pages/Users';
+import Services from './pages/Services';
 
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/services" element={<Services />} />
       </Routes>
       <FooterCom />
     </BrowserRouter>

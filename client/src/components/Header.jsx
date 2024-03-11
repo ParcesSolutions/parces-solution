@@ -29,9 +29,9 @@ function Header() {
               Projects
             </Link>
           </Navbar.Link>
-          <Navbar.Link active={path === "/uniform-portal"}>
-            <Link to='/sign-up'>
-              Uniform Portal
+          <Navbar.Link active={path === "/services"}>
+            <Link to='/services'>
+              Services
             </Link>
           </Navbar.Link>
         </Navbar.Collapse>
