@@ -8,16 +8,22 @@ import { signInSuccess, signInStart, signInFailure } from '../redux/user/userSli
 
 function SignIn() {
 
-  /* state to manage form data */
-  const [formData, setFormData] = useState({});
-  const {loading, error: errorMessage} = useSelector(state => state.user);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    // const {currentUser} = useSelector(state => state.user); //get user info if singed in
 
-   /* Keep track of input in field. keep previous inputs for other fields, save inputs for each field Id */
-   const handleChange = (e) => {
-    setFormData({...formData, [e.target.id]: e.target.value.trim()});
-   };
+    // if (currentUser){
+    //     navigate('/uniforms');
+    // }
+
+    /* state to manage form data */
+    const [formData, setFormData] = useState({});
+    const {loading, error: errorMessage} = useSelector(state => state.user);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    /* Keep track of input in field. keep previous inputs for other fields, save inputs for each field Id */
+    const handleChange = (e) => {
+        setFormData({...formData, [e.target.id]: e.target.value.trim()});
+    };
     
     /* handle submission of form data */
     const handleSubmit = async (e) => {
