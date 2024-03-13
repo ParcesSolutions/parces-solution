@@ -14,6 +14,7 @@ import Profile from './pages/Profile';
 import Orders from './pages/Orders';
 import Users from './pages/Users';
 import Services from './pages/Services';
+import PrivateRoute from './components/PrivateRoute';
 
 
 export default function App() {
@@ -25,7 +26,12 @@ export default function App() {
         <Route path="/sign-in" element={<SignIn/>} />
         <Route path="/sign-up" element={<SignUp/>} />
         <Route path="/projects" element={<Projects/>} />
-        <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* Private Routes for signed in users only */}
+        <Route element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+        
         <Route path="/uniform-portal" element={<VolvoUniformPortal />} />
         <Route path="/uniforms" element={<Uniforms />} />
         <Route path="/cart" element={<Cart />} />

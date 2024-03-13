@@ -53,6 +53,11 @@ function Header() {
           </>
         )}
       </div>
+      <div>
+        {currentUser ? (
+          <></>
+        ):
+        (
         <Navbar.Collapse className='px-2 self-center'>
           <Navbar.Link active={path === "/"}>
             <Link to='/'>
@@ -70,6 +75,8 @@ function Header() {
             </Link>
           </Navbar.Link>
         </Navbar.Collapse>
+        )}
+      </div>
     </Navbar>
   )
 }
