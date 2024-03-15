@@ -58,7 +58,7 @@ function SignIn() {
             }
             if (res.ok) {
                 dispatch(signInSuccess(data));
-                navigate('/uniforms');
+                navigate('/dashboard?tab=profile');
             }
         } catch (error) {
             dispatch(signInFailure(error.message));
