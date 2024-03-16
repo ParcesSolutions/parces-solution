@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
+import cookieParser from 'cookie-parser';
 
 /*access env file*/
 dotenv.config();
@@ -21,6 +22,9 @@ const app = express();
 
 /* Turn res from DB into json in order to manipulate*/
 app.use(express.json());
+
+// initialize cookie-parser in order to get access to cookies
+app.use(cookieParser());
 
 /* connect get route */
 app.listen(3000, () => {

@@ -47,7 +47,7 @@ function DashProfile() {
               </div>
               <div>
                 <Label value='Shorts width' /> 
-                <TextInput type='text' id='shorts_width' placeholder='Size 28 to 46' defaultValue={currentUser.currentUser.shorts_width} />
+                <TextInput type='text' id='shorts_width' placeholder='28 to 46' defaultValue={currentUser.currentUser.shorts_width} />
               </div>
             </div>
           </div>
@@ -56,11 +56,11 @@ function DashProfile() {
           <div className='flex gap-2 w-80 mx-auto mt-5'>
               <div>
                 <Label value='Pants Width' />
-                <TextInput type='text' id='pants_width' placeholder='Size 28 to 46' defaultValue={currentUser.currentUser.pants_width} />
+                <TextInput type='text' id='pants_width' placeholder='28 to 46' defaultValue={currentUser.currentUser.pants_width} />
               </div>
               <div>
                 <Label value='Pants Length' />
-                <TextInput type='text' id='pants_length' placeholder='Size 28 to 42' defaultValue={currentUser.currentUser.pants_length} />
+                <TextInput type='text' id='pants_length' placeholder='28 to 42' defaultValue={currentUser.currentUser.pants_length} />
               </div>
               <div>
                 <Label value='Gender' /> 
