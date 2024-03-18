@@ -1,42 +1,140 @@
-import { TextInput, Label, Button, Select } from 'flowbite-react';
-import {useSelector} from 'react-redux';
+import { TextInput, Label, Button, Select, Alert } from 'flowbite-react';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateStart, updateSuccess, updateFailure } from '../redux/user/userSlice';
 
 function DashProfile() {
 
+  // Access global user data from signed in user
   const currentUser = useSelector((state) => state.user);
+
+  //Create form data to send to DB for updating
+  const [formData, setFormData] = useState({});
+
+  // Inform user update was successful
+  const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
+
+  // Infomr user error with update
+  const [updateError, setUpdateError] = useState(null);
+
+  const dispatch = useDispatch();
+
+  // Add changed data to formData
+  // example of how to add changed data from a specific id:
+  // setFormData({...formData, shirt_size: e.target.value})
+  const handleChange = (e) => {
+    setFormData({...formData, [e.target.id]: e.target.value});
+  };
+
+  // Function to handle submitting formData to Update User API
+  const handleSubmit = async (e) => {
+    
+    // Prevent form from refreshing on UI
+    e.preventDefault();
+
+    // Remove any recent success or error alerts when re-submitting
+    setUpdateError(null);
+    setUpdateUserSuccess(null);
+
+    // Verify that formData is not empty in order to trigger update
+    if (Object.keys(formData).length === 0) {
+      setUpdateError("No changes made to update");
+      return;
+    }
+    
+    try {
+
+      // Distpatch start from Redux
+      dispatch(updateStart());
+
+      console.log();
+
+      // Send formData to dynamic URL based on user ID
+      const res = await fetch(`/api/user/update/${currentUser.currentUser._id}`, {
+        method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
+        });
+
+      // Make response from API into JSON
+      const data = await res.json();
+
+      // Handle JSON response from API
+      if (!res.ok) {
+        dispatch(updateFailure(data.message));
+        setUpdateError(data.message);
+        return
+
+      } else {
+        dispatch(updateSuccess(data));
+        setUpdateUserSuccess("Your profile has been updated successfully");
+      }
+
+    } catch (error) {
+      dispatch(updateFailure(error.message));
+      setUpdateError(error.message);
+    }
+  }
 
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
       <h1 className='my-7 text-center font-semibold text-3xl'>Profile</h1>
-      <form className='flex flex-col'>
+      <form onSubmit={handleSubmit} className='flex flex-col'>
         <h2 className='ml-5 underline font-semibold text-xl'>Account Info</h2>
         <div className='mt-5 flex gap-6 justify-center'>
           <div className='flex gap-2 justify-center'>
           <div className='w-40'>
             <Label value='First Name' />
-            <TextInput type='text' id='firstname' placeholder='First Name' defaultValue={currentUser.currentUser.firstname} />
+            <TextInput 
+              type='text' 
+              id='firstname' 
+              placeholder='First Name' 
+              defaultValue={currentUser.currentUser.firstname} 
+              onChange={handleChange}/>
           </div>
           <div className='w-40'>
             <Label value='Last Name' />
-            <TextInput type='text' id='lastname' placeholder='Last Name' defaultValue={currentUser.currentUser.lastname} />
+            <TextInput 
+              type='text' 
+              id='lastname' 
+              placeholder='Last Name' 
+              defaultValue={currentUser.currentUser.lastname}
+              onChange={handleChange} />
           </div>
           </div>
         </div>
         <div className='mt-5 gap-6 mx-auto w-80'>
           <Label value='Email' />
-          <TextInput type='text' id='email' placeholder='Email' defaultValue={currentUser.currentUser.email} />
+          <TextInput 
+            type='text' 
+            id='email' 
+            placeholder='Email' 
+            defaultValue={currentUser.currentUser.email}
+            onChange={handleChange} />
         </div>
         <div className='mt-5 gap-6 mx-auto w-80'>
           <Label value='New Password' />
-          <TextInput type='text' id='password' placeholder='password' />
+          <TextInput 
+            type='text' 
+            id='password' 
+            placeholder='password'
+            onChange={handleChange} />
         </div>
         <div className='mt-5 gap-6 mx-auto w-80'>
           <Label value='Confirm Password' />
-          <TextInput type='text' id='confirmPassword' placeholder='confirm password' />
+          <TextInput 
+            type='text' 
+            id='confirmPassword' 
+            placeholder='confirm password' />
         </div>
         <div className='mt-5 gap-6 mx-auto w-80'>
           <Label value='Address' />
-          <TextInput type='text' id='address' placeholder='Address' defaultValue={currentUser.currentUser.address} />
+          <TextInput 
+            type='text'  
+            id='address' 
+            placeholder='Address' 
+            defaultValue={currentUser.currentUser.address}
+            onChange={handleChange} />
         </div>
         <h2 className='ml-5 underline font-semibold text-xl mt-10'>Clothing Sizes</h2>
         <div className='mt-3 flex gap-6 justify-center'>
@@ -48,7 +146,8 @@ function DashProfile() {
                 <Select 
                     id='shirt_size' 
                     required type="text" 
-                    defaultValue={currentUser.currentUser.shirt_size}>
+                    defaultValue={currentUser.currentUser.shirt_size}
+                    onChange={handleChange}>
                         <option value={currentUser.currentUser.shirt_size}>Saved Size: {currentUser.currentUser.shirt_size}</option>
                         <option>S</option>
                         <option>M</option>
@@ -67,7 +166,8 @@ function DashProfile() {
                 <Select 
                     id='sweatshirt_size' 
                     required type="text" 
-                    defaultValue={currentUser.currentUser.sweatshirt_size}>
+                    defaultValue={currentUser.currentUser.sweatshirt_size}
+                    onChange={handleChange}>
                         <option value={currentUser.currentUser.sweatshirt_size}>Saved Size: {currentUser.currentUser.sweatshirt_size}</option>
                         <option>S</option>
                         <option>M</option>
@@ -86,7 +186,8 @@ function DashProfile() {
                 <Select 
                     id='shorts_width' 
                     required type="text"
-                    defaultValue={currentUser.currentUser.shorts_width}>
+                    defaultValue={currentUser.currentUser.shorts_width}
+                    onChange={handleChange}>
                         <option value={currentUser.currentUser.shorts_width}>Saved size: {currentUser.currentUser.shorts_width} </option>
                         <option>28</option>
                         <option>29</option>
@@ -120,7 +221,8 @@ function DashProfile() {
                 <Select 
                     id='pants_width' 
                     required type="text"
-                    defaultValue={currentUser.currentUser.pants_width}>
+                    defaultValue={currentUser.currentUser.pants_width}
+                    onChange={handleChange}>
                         <option value={currentUser.currentUser.pants_width}>Saved size: {currentUser.currentUser.pants_width} </option>
                         <option>28</option>
                         <option>29</option>
@@ -149,7 +251,8 @@ function DashProfile() {
                 <Select 
                     id='pants_length' 
                     required type="text"
-                    defaultValue={currentUser.currentUser.pants_length}>
+                    defaultValue={currentUser.currentUser.pants_length}
+                    onChange={handleChange}>
                         <option value={currentUser.currentUser.pants_length}>Saved size: {currentUser.currentUser.pants_length} </option>
                         <option>28</option>
                         <option>29</option>
@@ -174,7 +277,8 @@ function DashProfile() {
                 <Select 
                     id='gender' 
                     required type="text"
-                    defaultValue={currentUser.currentUser.gender} >
+                    defaultValue={currentUser.currentUser.gender}
+                    onChange={handleChange} >
                         <option value={currentUser.currentUser.gender}>Saved size: {currentUser.currentUser.gender}</option>
                         <option>Male</option>
                         <option>Female</option>
@@ -191,6 +295,20 @@ function DashProfile() {
         <span className='cursor-pointer'>Delete Account</span>
         <span className='cursor-pointer'>Sign Out</span>
       </div>
+      {updateUserSuccess && (
+        <Alert 
+          color='success' 
+          className='mb-12 justify-center'>
+          {updateUserSuccess}
+        </Alert>
+      )}
+      {updateError && (
+        <Alert 
+        color='failure' 
+        className='mb-12 justify-center'>
+          {updateError}
+        </Alert>
+      )}
     </div>
   )
 }

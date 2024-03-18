@@ -81,7 +81,7 @@ function SignIn() {
                 <form onSubmit={handleSubmit}> 
                     <div className='mt-5 flex gap-6 justify-center'>
                         <div>
-                            <Label value='Your Volvo A Number' />
+                            <Label className='text-xs md:text-base' value='Your Volvo A Number' />
                             <TextInput 
                                 type='text'
                                 placeholder='ex A12345'
@@ -89,8 +89,8 @@ function SignIn() {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div>
-                            <Label value='Volvo Employee Number' />
+                        <div >
+                            <Label className='text-xs md:text-base' value='Volvo Employee Number' />
                             <TextInput 
                                 type='text'
                                 placeholder='Employee Number'
