@@ -4,7 +4,14 @@ import jwt from "jsonwebtoken";
 import {errorHandler} from '../utils/error.js';
 
 export const signup = async (req, res, next) => {
-    const { a_number, employee_number, password, firstname, lastname, email, address, shirt_size, sweatshirt_size, shorts_width, pants_width, pants_length, gender } = req.body;
+    let { a_number, employee_number, password, firstname, lastname, email, address, shirt_size, sweatshirt_size, shorts_width, pants_width, pants_length, gender } = req.body;
+
+    // a_number = a_number.toLowerCase();
+    // firstname = firstname.toLowerCase();
+    // lastname = lastname.toLowerCase();
+    // shirt_size = shirt_size.toLowerCase();
+    // sweatshirt_size = sweatshirt_size.toLowerCase();
+    // gender = gender.toLowerCase();
 
     /* encrypt password for security */
     const salt = bcryptjs.genSaltSync(10);
@@ -35,6 +42,7 @@ export const signup = async (req, res, next) => {
     }
 };
 
+// Function for user sign in
 export const signin = async (req, res, next) => {
     const { a_number, employee_number, password } = req.body;
 
@@ -43,21 +51,31 @@ export const signin = async (req, res, next) => {
         next(errorHandler(400, 'All fields are required'));
     }
 
+    //Check sign in data vs DB
     try {
+
+        //Retreive User from database based on employee number
         //need to make async since we have to wait for results
         const validUser = await User.findOne({employee_number});
+
         if (!validUser) {
-            return next(errorHandler(404, 'Employee Number invalid'));
+            return next(errorHandler(404, 'Employee Number does not exist'));
         }
-        
 
-        const validANumber = await User.findOne({a_number});
-        if (!validANumber) {
-            return next(errorHandler(404, 'A Number invalid'));
+        if (validUser) {
+            if (validUser.a_number != a_number) {
+                return next(errorHandler(404, 'Incorrect A Number'))
+            }
         }
-        
 
+        // const validANumber = await User.findOne({a_number});
+        // if (!validANumber) {
+        //     return next(errorHandler(404, 'A Number invalid'));
+        // }
+        
+        // Compare input password with encrypted User password in Database
         const validPassword = bcryptjs.compareSync(password, validUser.password);
+
         if (!validPassword) {
             return next(errorHandler(400, 'Invalid password'));
         }

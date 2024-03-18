@@ -1,8 +1,8 @@
 'use client'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import parces_small_logo from '../logo/parces_small_logo.jpg';
-import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
+import { Alert, Button, Select, Label, Spinner, TextInput } from 'flowbite-react';
 
 function SignUp() {
 
@@ -18,18 +18,21 @@ function SignUp() {
    const handleChange = (e) => {
     setFormData({...formData, [e.target.id]: e.target.value.trim()});
    };
+
+   console.log(formData.shirt_size);
     
     /* handle submission of form data */
     const handleSubmit = async (e) => {
 
-        e.preventDefault(); /* prevents form from refreshing */
+        //Prevent form from refreshing
+        e.preventDefault();
 
-        if(formData.password == null){
-            return setErrorMessage('Password must be filled in');
-        }
-        else if (!formData.a_number || 
+        //Checks for submitted data before creating User
+        
+        if (!formData.a_number || 
             !formData.employee_number || 
             !formData.password || 
+            !formData.confirmPassword ||
             !formData.firstname || 
             !formData.lastname || 
             !formData.email || 
@@ -42,12 +45,33 @@ function SignUp() {
             !formData.gender) {
             return setErrorMessage('Please fill out all fields');
         }
-        // else if(formData.confirmPassword == formData.password){
-        //     return setErrorMessage('Passwords do not match. Please try again.');
-        // }
+        else if(formData.password == null){
+            return setErrorMessage('Password must be filled in');
+        }
+        else if(formData.confirmPassword != formData.password){
+            return setErrorMessage('Passwords do not match. Please try again.');
+        }
         else if(formData.confirmPassword == null){
             return setErrorMessage('Please confirm password');
         }
+        // else if(Number(formData.pants_width) < 28 || Number(formData.pants_width) > 46) {
+        //     return setErrorMessage('Pants width size must be between 28 to 46');
+        // }
+        // else if(Number(formData.pants_length) < 28 || Number(formData.pants_length) > 46) {
+        //     return setErrorMessage('Pants length size must be between 28 to 42');
+        // }
+        // else if(Number(formData.shorts_width) < 28 || Number(formData.shorts_width) > 46) {
+        //     return setErrorMessage('Shorts width size must be between 28 to 46');
+        // }
+        // else if(formData.shirt_size.toLowerCase() != "s" || formData.shirt_size.toLowerCase() != "m" || formData.shirt_size.toLowerCase() != "l" || formData.shirt_size.toLowerCase() != "xl" || formData.shirt_size.toLowerCase() != "xxl" || formData.shirt_size.toLowerCase() != "2xl" || formData.shirt_size.toLowerCase() != "xxxl" || formData.shirt_size.toLowerCase() != "3xl" || formData.shirt_size.toLowerCase() != "4xl" || formData.shirt_size.toLowerCase() != "xxxxl" || formData.shirt_size.toLowerCase() != "5xl" || formData.shirt_size.toLowerCase() != "xxxxxl" || formData.shirt_size.toLowerCase() != "6xl" || formData.shirt_size.toLowerCase() != "xxxxxxl") {
+        //     return setErrorMessage('Shirt sizes must be between S to 6XL');
+        // }
+        // else if(formData.sweatshirt_size.toLowerCase() != "s" || formData.sweatshirt_size.toLowerCase() != "m" || formData.sweatshirt_size.toLowerCase() != "l" || formData.sweatshirt_size.toLowerCase() != "xl" || formData.sweatshirt_size.toLowerCase() != "xxl" || formData.sweatshirt_size.toLowerCase() != "2xl" || formData.sweatshirt_size.toLowerCase() != "xxxl" || formData.sweatshirt_size.toLowerCase() != "3xl" || formData.sweatshirt_size.toLowerCase() != "4xl" || formData.sweatshirt_size.toLowerCase() != "xxxxl" || formData.sweatshirt_size.toLowerCase() != "5xl" || formData.sweatshirt_size.toLowerCase() != "xxxxxl" || formData.sweatshirt_size.toLowerCase() != "6xl" || formData.sweatshirt_size.toLowerCase() != "xxxxxxl") {
+        //     return setErrorMessage('Sweatshirt sizes must be between S to 6XL');
+        // }
+        // else if(formData.gender.toLowerCase() != "m" || formData.gender.toLowerCase() != "f" || formData.gender.toLowerCase() != "n" || formData.gender.toLowerCase() != "neutral") {
+        //     return setErrorMessage('Please enter a gender of either M, F or Neutral');
+        // }
 
         try {
             setLoading(true);
@@ -175,59 +199,169 @@ function SignUp() {
                     <div className='mt-1 flex gap-2 justify-center'>
                         <div className='flex-1 w-2'>
                             <Label value='Shirt Size' />
-                            <TextInput 
+                            {/* <TextInput 
                                 type='text'
                                 placeholder='S,M,L,XL --> 6XL'
                                 id='shirt_size'
                                 onChange={handleChange}
-                            />
+                            /> */}
+                            <Select 
+                                id='shirt_size' 
+                                required type="text" 
+                                onChange={handleChange}>
+                                    <option> </option>
+                                    <option>S</option>
+                                    <option>M</option>
+                                    <option>L</option>
+                                    <option>XL</option>
+                                    <option>2XL</option>
+                                    <option>3XL</option>
+                                    <option>4XL</option>
+                                    <option>5XL</option>
+                                    <option>6XL</option>
+                            </Select>
                         </div>
                         <div className='flex-1 w-2'>
                             <Label value='Sweatshirt Size' />
-                            <TextInput 
+                            {/* <TextInput 
                                 type='text'
                                 placeholder='S,M,L,XL --> 6XL'
                                 id='sweatshirt_size'
                                 onChange={handleChange}
-                            />
+                            /> */}
+                            <Select 
+                                id='sweatshirt_size' 
+                                required type="text" 
+                                onChange={handleChange}>
+                                    <option> </option>
+                                    <option>S</option>
+                                    <option>M</option>
+                                    <option>L</option>
+                                    <option>XL</option>
+                                    <option>2XL</option>
+                                    <option>3XL</option>
+                                    <option>4XL</option>
+                                    <option>5XL</option>
+                                    <option>6XL</option>
+                            </Select>
                         </div>
                         <div className='flex-1 w-2'>
                             <Label value='Shorts Width' />
-                            <TextInput 
+                            {/* <TextInput 
                                 type='text'
                                 placeholder='Size 28 to 46'
                                 id='shorts_width'
                                 onChange={handleChange}
-                            />
+                            /> */}
+                            <Select 
+                                id='shorts_width' 
+                                required type="text" 
+                                onChange={handleChange}>
+                                    <option> </option>
+                                    <option>28</option>
+                                    <option>29</option>
+                                    <option>30</option>
+                                    <option>31</option>
+                                    <option>32</option>
+                                    <option>33</option>
+                                    <option>34</option>
+                                    <option>35</option>
+                                    <option>36</option>
+                                    <option>37</option>
+                                    <option>38</option>
+                                    <option>39</option>
+                                    <option>40</option>
+                                    <option>41</option>
+                                    <option>42</option>
+                                    <option>43</option>
+                                    <option>44</option>
+                                    <option>45</option>
+                                    <option>46</option>
+                            </Select>
                         </div>
                     </div>
                     <div className='mt-1 flex gap-2 justify-center'>
                         <div className='flex-1 w-2'>
                             <Label value='Pants Width' />
-                            <TextInput 
+                            {/* <TextInput 
                                 type='text'
                                 placeholder='28 to 46'
                                 id='pants_width'
                                 onChange={handleChange}
-                            />
+                            /> */}
+                            <Select 
+                                id='pants_width' 
+                                required type="text" 
+                                onChange={handleChange}>
+                                    <option> </option>
+                                    <option>28</option>
+                                    <option>29</option>
+                                    <option>30</option>
+                                    <option>31</option>
+                                    <option>32</option>
+                                    <option>33</option>
+                                    <option>34</option>
+                                    <option>35</option>
+                                    <option>36</option>
+                                    <option>37</option>
+                                    <option>38</option>
+                                    <option>39</option>
+                                    <option>40</option>
+                                    <option>41</option>
+                                    <option>42</option>
+                                    <option>43</option>
+                                    <option>44</option>
+                                    <option>45</option>
+                                    <option>46</option>
+                            </Select>
                         </div>
                         <div className='flex-1'>
                             <Label value='Pants Length' />
-                            <TextInput 
+                            {/* <TextInput 
                                 type='text'
                                 placeholder='28 to 42'
                                 id='pants_length'
                                 onChange={handleChange}
-                            />
+                            /> */}
+                            <Select 
+                                id='pants_length' 
+                                required type="text" 
+                                onChange={handleChange}>
+                                    <option> </option>
+                                    <option>28</option>
+                                    <option>29</option>
+                                    <option>30</option>
+                                    <option>31</option>
+                                    <option>32</option>
+                                    <option>33</option>
+                                    <option>34</option>
+                                    <option>35</option>
+                                    <option>36</option>
+                                    <option>37</option>
+                                    <option>38</option>
+                                    <option>39</option>
+                                    <option>40</option>
+                                    <option>41</option>
+                                    <option>42</option>
+                            </Select>
                         </div>
                         <div className='flex-1'>
                             <Label value='Gender' />
-                            <TextInput 
+                            {/* <TextInput 
                                 type='text'
                                 placeholder='M, F, or Neutral'
                                 id='gender'
                                 onChange={handleChange}
-                            />
+                            /> */}
+                            <Select 
+                                id='gender' 
+                                required type="text" 
+                                onChange={handleChange}>
+                                    <option> </option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Neutral</option>
+                            </Select>
                         </div>
                     </div>
                     <Button type='submit' className='bg-blue-800 text-white mt-8 px-10 py-1.5 mx-auto hover:bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700' disabled={loading}>

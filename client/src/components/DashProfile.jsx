@@ -1,9 +1,10 @@
-import { TextInput, Label, Button } from 'flowbite-react';
-import React from 'react';
+import { TextInput, Label, Button, Select } from 'flowbite-react';
 import {useSelector} from 'react-redux';
 
 function DashProfile() {
+
   const currentUser = useSelector((state) => state.user);
+
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
       <h1 className='my-7 text-center font-semibold text-3xl'>Profile</h1>
@@ -26,8 +27,12 @@ function DashProfile() {
           <TextInput type='text' id='email' placeholder='Email' defaultValue={currentUser.currentUser.email} />
         </div>
         <div className='mt-5 gap-6 mx-auto w-80'>
-          <Label value='Password' />
+          <Label value='New Password' />
           <TextInput type='text' id='password' placeholder='password' />
+        </div>
+        <div className='mt-5 gap-6 mx-auto w-80'>
+          <Label value='Confirm Password' />
+          <TextInput type='text' id='confirmPassword' placeholder='confirm password' />
         </div>
         <div className='mt-5 gap-6 mx-auto w-80'>
           <Label value='Address' />
@@ -36,35 +41,145 @@ function DashProfile() {
         <h2 className='ml-5 underline font-semibold text-xl mt-10'>Clothing Sizes</h2>
         <div className='mt-3 flex gap-6 justify-center'>
           <div className='flex gap-2 justify-center'>
-            <div className='flex gap-2 w-80'>
+            <div className='flex gap-2 '>
               <div>
                 <Label value='Shirt size' />
-                <TextInput type='text' id='shirt_size' placeholder='S,M,L,XL --> 6XL' defaultValue={currentUser.currentUser.shirt_size} />
+                {/* <TextInput type='text' id='shirt_size' placeholder='S,M,L,XL --> 6XL' defaultValue={currentUser.currentUser.shirt_size} /> */}
+                <Select 
+                    id='shirt_size' 
+                    required type="text" 
+                    defaultValue={currentUser.currentUser.shirt_size}>
+                        <option value={currentUser.currentUser.shirt_size}>Saved Size: {currentUser.currentUser.shirt_size}</option>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                        <option>2XL</option>
+                        <option>3XL</option>
+                        <option>4XL</option>
+                        <option>5XL</option>
+                        <option>6XL</option>
+                </Select>
               </div>
               <div>
                 <Label value='Sweatshirt size' />
-                <TextInput type='text' id='sweatshirt_size' placeholder='S,M,L,XL --> 6XL' defaultValue={currentUser.currentUser.sweatshirt_size} />
+                {/* <TextInput type='text' id='sweatshirt_size' placeholder='S,M,L,XL --> 6XL' defaultValue={currentUser.currentUser.sweatshirt_size} /> */}
+                <Select 
+                    id='sweatshirt_size' 
+                    required type="text" 
+                    defaultValue={currentUser.currentUser.sweatshirt_size}>
+                        <option value={currentUser.currentUser.sweatshirt_size}>Saved Size: {currentUser.currentUser.sweatshirt_size}</option>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                        <option>2XL</option>
+                        <option>3XL</option>
+                        <option>4XL</option>
+                        <option>5XL</option>
+                        <option>6XL</option>
+                </Select>
               </div>
               <div>
                 <Label value='Shorts width' /> 
-                <TextInput type='text' id='shorts_width' placeholder='28 to 46' defaultValue={currentUser.currentUser.shorts_width} />
+                {/* <TextInput type='text' id='shorts_width' placeholder='28 to 46' defaultValue={currentUser.currentUser.shorts_width} /> */}
+                <Select 
+                    id='shorts_width' 
+                    required type="text"
+                    defaultValue={currentUser.currentUser.shorts_width}>
+                        <option value={currentUser.currentUser.shorts_width}>Saved size: {currentUser.currentUser.shorts_width} </option>
+                        <option>28</option>
+                        <option>29</option>
+                        <option>30</option>
+                        <option>31</option>
+                        <option>32</option>
+                        <option>33</option>
+                        <option>34</option>
+                        <option>35</option>
+                        <option>36</option>
+                        <option>37</option>
+                        <option>38</option>
+                        <option>39</option>
+                        <option>40</option>
+                        <option>41</option>
+                        <option>42</option>
+                        <option>43</option>
+                        <option>44</option>
+                        <option>45</option>
+                        <option>46</option>
+                </Select>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <div className='flex gap-2 w-80 mx-auto mt-5'>
+          <div className='flex gap-2 justify-center mx-auto mt-5'>
               <div>
                 <Label value='Pants Width' />
-                <TextInput type='text' id='pants_width' placeholder='28 to 46' defaultValue={currentUser.currentUser.pants_width} />
+                {/* <TextInput type='text' id='pants_width' placeholder='28 to 46' defaultValue={currentUser.currentUser.pants_width} /> */}
+                <Select 
+                    id='pants_width' 
+                    required type="text"
+                    defaultValue={currentUser.currentUser.pants_width}>
+                        <option value={currentUser.currentUser.pants_width}>Saved size: {currentUser.currentUser.pants_width} </option>
+                        <option>28</option>
+                        <option>29</option>
+                        <option>30</option>
+                        <option>31</option>
+                        <option>32</option>
+                        <option>33</option>
+                        <option>34</option>
+                        <option>35</option>
+                        <option>36</option>
+                        <option>37</option>
+                        <option>38</option>
+                        <option>39</option>
+                        <option>40</option>
+                        <option>41</option>
+                        <option>42</option>
+                        <option>43</option>
+                        <option>44</option>
+                        <option>45</option>
+                        <option>46</option>
+                </Select>
               </div>
               <div>
                 <Label value='Pants Length' />
-                <TextInput type='text' id='pants_length' placeholder='28 to 42' defaultValue={currentUser.currentUser.pants_length} />
+                {/* <TextInput type='text' id='pants_length' placeholder='28 to 42' defaultValue={currentUser.currentUser.pants_length} /> */}
+                <Select 
+                    id='pants_length' 
+                    required type="text"
+                    defaultValue={currentUser.currentUser.pants_length}>
+                        <option value={currentUser.currentUser.pants_length}>Saved size: {currentUser.currentUser.pants_length} </option>
+                        <option>28</option>
+                        <option>29</option>
+                        <option>30</option>
+                        <option>31</option>
+                        <option>32</option>
+                        <option>33</option>
+                        <option>34</option>
+                        <option>35</option>
+                        <option>36</option>
+                        <option>37</option>
+                        <option>38</option>
+                        <option>39</option>
+                        <option>40</option>
+                        <option>41</option>
+                        <option>42</option>
+                </Select>
               </div>
               <div>
                 <Label value='Gender' /> 
-                <TextInput type='text' id='gender' placeholder='M, F, or Neutral' defaultValue={currentUser.currentUser.gender} />
+                {/* <TextInput type='text' id='gender' placeholder='M, F, or Neutral' defaultValue={currentUser.currentUser.gender} /> */}
+                <Select 
+                    id='gender' 
+                    required type="text"
+                    defaultValue={currentUser.currentUser.gender} >
+                        <option value={currentUser.currentUser.gender}>Saved size: {currentUser.currentUser.gender}</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Neutral</option>
+                </Select>
               </div>
             </div>
         </div>
