@@ -1,12 +1,31 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Button, Navbar, Dropdown, Avatar } from 'flowbite-react';
 import parces_small_logo from '../logo/parces_small_logo.jpg';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {AiOutlineUser} from 'react-icons/ai';
+import { signoutSuccess } from '../redux/user/userSlice';
 
 function Header() {
   const path = useLocation().pathname;
   const {currentUser} = useSelector(state => state.user); //get the user info when signed in
+  const dispatch = useDispatch();
+
+  const handleSignOut = async () => {
+    try {
+      const res = await fetch('/api/user/signout', {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if(!res.ok) {
+        console.log(data.error);
+      } else {
+        dispatch(signoutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <Navbar className='border-b-2'>
       <Link to='/' className='self-center whitespace-nowrap text-sm sm:text-xl flex'>
@@ -36,8 +55,8 @@ function Header() {
               <Dropdown.Item>Edit Profile</Dropdown.Item>
             </Link>
             <Dropdown.Divider />
-            <Link to='/sign-out'>
-              <Dropdown.Item>Sign Out</Dropdown.Item>
+            <Link to='/sign-in'>
+              <Dropdown.Item onClick={handleSignOut}>Sign Out</Dropdown.Item>
             </Link>
             
           </Dropdown>

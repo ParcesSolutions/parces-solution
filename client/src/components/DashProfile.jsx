@@ -1,15 +1,21 @@
 import { TextInput, Label, Button, Select, Alert, Modal } from 'flowbite-react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure } from '../redux/user/userSlice';
+import { 
+  updateStart, 
+  updateSuccess, 
+  updateFailure, 
+  deleteUserStart, 
+  deleteUserSuccess, 
+  deleteUserFailure,
+  signoutSuccess, 
+} from '../redux/user/userSlice';
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
 
 function DashProfile() {
 
   // Access global user data from signed in user
-  const currentUser = useSelector((state) => state.user);
-
-  const error = useSelector((state) => state.error);
+  const {currentUser, error} = useSelector(state => state.user);
 
   //Create form data to send to DB for updating
   const [formData, setFormData] = useState({});
@@ -56,7 +62,7 @@ function DashProfile() {
       console.log();
 
       // Send formData to dynamic URL based on user ID
-      const res = await fetch(`/api/user/update/${currentUser.currentUser._id}`, {
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(formData)
@@ -90,7 +96,7 @@ function DashProfile() {
       dispatch(deleteUserStart());
 
       //Make delete API call and get response
-      const res = await fetch(`/api/user/delete/${currentUser.currentUser._id}`, {
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
       });
 
@@ -108,6 +114,22 @@ function DashProfile() {
     }
   };
 
+  const handleSignOut = async () => {
+    try {
+      const res = await fetch('/api/user/signout', {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if(!res.ok) {
+        console.log(data.error);
+      } else {
+        dispatch(signoutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
 
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
@@ -122,7 +144,7 @@ function DashProfile() {
               type='text' 
               id='firstname' 
               placeholder='First Name' 
-              defaultValue={currentUser.currentUser.firstname} 
+              defaultValue={currentUser.firstname} 
               onChange={handleChange}/>
           </div>
           <div className='w-40'>
@@ -131,7 +153,7 @@ function DashProfile() {
               type='text' 
               id='lastname' 
               placeholder='Last Name' 
-              defaultValue={currentUser.currentUser.lastname}
+              defaultValue={currentUser.lastname}
               onChange={handleChange} />
           </div>
           </div>
@@ -142,7 +164,7 @@ function DashProfile() {
             type='text' 
             id='email' 
             placeholder='Email' 
-            defaultValue={currentUser.currentUser.email}
+            defaultValue={currentUser.email}
             onChange={handleChange} />
         </div>
         <div className='mt-5 gap-6 mx-auto w-80'>
@@ -166,7 +188,7 @@ function DashProfile() {
             type='text'  
             id='address' 
             placeholder='Address' 
-            defaultValue={currentUser.currentUser.address}
+            defaultValue={currentUser.address}
             onChange={handleChange} />
         </div>
         <h2 className='ml-5 underline font-semibold text-xl mt-10'>Clothing Sizes</h2>
@@ -179,9 +201,9 @@ function DashProfile() {
                 <Select 
                     id='shirt_size' 
                     required type="text" 
-                    defaultValue={currentUser.currentUser.shirt_size}
+                    defaultValue={currentUser.shirt_size}
                     onChange={handleChange}>
-                        <option value={currentUser.currentUser.shirt_size}>Saved Size: {currentUser.currentUser.shirt_size}</option>
+                        <option value={currentUser.shirt_size}>Saved Size: {currentUser.shirt_size}</option>
                         <option>S</option>
                         <option>M</option>
                         <option>L</option>
@@ -199,9 +221,9 @@ function DashProfile() {
                 <Select 
                     id='sweatshirt_size' 
                     required type="text" 
-                    defaultValue={currentUser.currentUser.sweatshirt_size}
+                    defaultValue={currentUser.sweatshirt_size}
                     onChange={handleChange}>
-                        <option value={currentUser.currentUser.sweatshirt_size}>Saved Size: {currentUser.currentUser.sweatshirt_size}</option>
+                        <option value={currentUser.sweatshirt_size}>Saved Size: {currentUser.sweatshirt_size}</option>
                         <option>S</option>
                         <option>M</option>
                         <option>L</option>
@@ -219,9 +241,9 @@ function DashProfile() {
                 <Select 
                     id='shorts_width' 
                     required type="text"
-                    defaultValue={currentUser.currentUser.shorts_width}
+                    defaultValue={currentUser.shorts_width}
                     onChange={handleChange}>
-                        <option value={currentUser.currentUser.shorts_width}>Saved size: {currentUser.currentUser.shorts_width} </option>
+                        <option value={currentUser.shorts_width}>Saved size: {currentUser.shorts_width} </option>
                         <option>28</option>
                         <option>29</option>
                         <option>30</option>
@@ -254,9 +276,9 @@ function DashProfile() {
                 <Select 
                     id='pants_width' 
                     required type="text"
-                    defaultValue={currentUser.currentUser.pants_width}
+                    defaultValue={currentUser.pants_width}
                     onChange={handleChange}>
-                        <option value={currentUser.currentUser.pants_width}>Saved size: {currentUser.currentUser.pants_width} </option>
+                        <option value={currentUser.pants_width}>Saved size: {currentUser.pants_width} </option>
                         <option>28</option>
                         <option>29</option>
                         <option>30</option>
@@ -284,9 +306,9 @@ function DashProfile() {
                 <Select 
                     id='pants_length' 
                     required type="text"
-                    defaultValue={currentUser.currentUser.pants_length}
+                    defaultValue={currentUser.pants_length}
                     onChange={handleChange}>
-                        <option value={currentUser.currentUser.pants_length}>Saved size: {currentUser.currentUser.pants_length} </option>
+                        <option value={currentUser.pants_length}>Saved size: {currentUser.pants_length} </option>
                         <option>28</option>
                         <option>29</option>
                         <option>30</option>
@@ -310,9 +332,9 @@ function DashProfile() {
                 <Select 
                     id='gender' 
                     required type="text"
-                    defaultValue={currentUser.currentUser.gender}
+                    defaultValue={currentUser.gender}
                     onChange={handleChange} >
-                        <option value={currentUser.currentUser.gender}>Saved size: {currentUser.currentUser.gender}</option>
+                        <option value={currentUser.gender}>Saved size: {currentUser.gender}</option>
                         <option>Male</option>
                         <option>Female</option>
                         <option>Neutral</option>
@@ -326,7 +348,7 @@ function DashProfile() {
       </form>
       <div className='mt-6 mb-20 text-red-500 font-semibold flex justify-between px-12'>
         <span onClick={() => setShowModal(true)} className='cursor-pointer'>Delete Account</span>
-        <span className='cursor-pointer'>Sign Out</span>
+        <span className='cursor-pointer' onClick={handleSignOut}>Sign Out</span>
       </div>
       {updateUserSuccess && (
         <Alert 
