@@ -1,12 +1,15 @@
-import { TextInput, Label, Button, Select, Alert } from 'flowbite-react';
+import { TextInput, Label, Button, Select, Alert, Modal } from 'flowbite-react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateStart, updateSuccess, updateFailure } from '../redux/user/userSlice';
+import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure } from '../redux/user/userSlice';
+import { HiOutlineExclamationCircle } from 'react-icons/hi'
 
 function DashProfile() {
 
   // Access global user data from signed in user
   const currentUser = useSelector((state) => state.user);
+
+  const error = useSelector((state) => state.error);
 
   //Create form data to send to DB for updating
   const [formData, setFormData] = useState({});
@@ -14,8 +17,11 @@ function DashProfile() {
   // Inform user update was successful
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
 
-  // Infomr user error with update
+  // Inform user error with update
   const [updateError, setUpdateError] = useState(null);
+
+  // Handle modal pop up when deleting user
+  const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -74,7 +80,34 @@ function DashProfile() {
       dispatch(updateFailure(error.message));
       setUpdateError(error.message);
     }
-  }
+  };
+
+  const handleDeleteUser = async () => {
+    setShowModal(false);
+    try {
+
+      //Start the deleting of user
+      dispatch(deleteUserStart());
+
+      //Make delete API call and get response
+      const res = await fetch(`/api/user/delete/${currentUser.currentUser._id}`, {
+        method: 'DELETE',
+      });
+
+      //convert response data to json
+      const data = await res.json();
+
+      //handle response
+      if(!res.ok) {
+        dispatch(deleteUserFailure(data.message));
+      } else {
+        dispatch(deleteUserSuccess(data))
+      }
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
+
 
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
@@ -292,7 +325,7 @@ function DashProfile() {
         </Button>
       </form>
       <div className='mt-6 mb-20 text-red-500 font-semibold flex justify-between px-12'>
-        <span className='cursor-pointer'>Delete Account</span>
+        <span onClick={() => setShowModal(true)} className='cursor-pointer'>Delete Account</span>
         <span className='cursor-pointer'>Sign Out</span>
       </div>
       {updateUserSuccess && (
@@ -309,6 +342,34 @@ function DashProfile() {
           {updateError}
         </Alert>
       )}
+      {error && (
+        <Alert 
+        color='failure' 
+        className='mb-12 justify-center'>
+          {error}
+        </Alert>
+      )}
+      <Modal 
+        show={showModal} 
+        onClose={() => setShowModal(false)} 
+        popup 
+        size='md'>
+          <Modal.Header />
+            <Modal.Body>
+              <div className="text-center">
+                <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 mb-4 mx-auto' />
+                <h3 className='mb-5 text-lg text-gray-500'>Are you sure you want to delete this account?</h3>
+                <div className="flex justify-center gap-10">
+                  <Button color='failure' onClick={handleDeleteUser}>
+                    Yes, I am sure
+                  </Button>
+                  <Button color='gray' onClick={() => setShowModal(false)}>
+                    No, cancel
+                  </Button>
+                </div>
+              </div>
+            </Modal.Body>
+      </Modal>
     </div>
   )
 }
