@@ -40,34 +40,6 @@ export const updateUser = async (req, res, next) => {
             return next(errorHandler(400, "Please enter a valid email"));
         }
     }
-    
-    // if (Number(req.body.shorts_width) < 28 || Number(req.body.shorts_width) > 46) {
-    //     return next(errorHandler(400, "Short widths size must be between 28 to 46"));
-    // }
-    // if (Number(req.body.pants_width) < 28 || Number(req.body.pants_width) > 46) {
-    //     return next(errorHandler(400, "Pants widths size must be between 28 to 46"));
-    // }
-    // if (Number(req.body.pants_length) < 28 || Number(req.body.pants_length) > 42) {
-    //     return next(errorHandler(400, "Pants lenght size must be between 28 to 42"));
-    // }
-
-    // if (req.body.shirt_size) {
-    //     if (req.body.shirt_size.toLowerCase() != "s" || req.body.shirt_size.toLowerCase() != "m" || req.body.shirt_size.toLowerCase() != "l" || req.body.shirt_size.toLowerCase() != "xl" || req.body.shirt_size.toLowerCase() != "xxl" || req.body.shirt_size.toLowerCase() != "2xl" || req.body.shirt_size.toLowerCase() != "3xl" || req.body.shirt_size.toLowerCase() != "4xl" || req.body.shirt_size.toLowerCase() != "5xl" || req.body.shirt_size.toLowerCase() != "6xl") {
-    //         return next(errorHandler(400, "Shirt size must be between S to 6XL"));
-    //     }
-    // }
-    
-    // if (req.body.sweatshirt_size) {
-    //     if (req.body.sweatshirt_size.toLowerCase() != "s" || req.body.sweatshirt_size.toLowerCase() != "m" || req.body.sweatshirt_size.toLowerCase() != "l" || req.body.sweatshirt_size.toLowerCase() != "xl" || req.body.sweatshirt_size.toLowerCase() != "xxl" || req.body.sweatshirt_size.toLowerCase() != "2xl" || req.body.sweatshirt_size.toLowerCase() != "3xl" || req.body.sweatshirt_size.toLowerCase() != "4xl" || req.body.sweatshirt_size.toLowerCase() != "5xl" || req.body.sweatshirt_size.toLowerCase() != "6xl") {
-    //         return next(errorHandler(400, "Sweatshirt size must be between S to 6XL"));
-    //     }
-    // }
-
-    // if (req.body.gender) {
-    //     if (req.body.gender.toLowerCase() != "m" || req.body.gender.toLowerCase() != "f" || req.body.gender.toLowerCase() != "n" || req.body.gender.toLowerCase() != "neutral") {
-    //         return next(errorHandler(400, "Please enter a valid gender (M,F,N) "));
-    //     }
-    // }
 
     //Update user
     try {
@@ -96,3 +68,20 @@ export const updateUser = async (req, res, next) => {
         next(error);
     }
 };
+
+
+// Function to handle deleting user
+export const deleteUser = async (req, res, next) => {
+    //make sure that user profile being deleted belongs to user requesting to delete
+    // NEED TO ADD CASE WHERE ADMIN IS WANTING TO DELETE OTHER USERS   
+    if (req.user.id !== req.params.userId) {
+        return next(errorHandler(403, "You are not authorized to delete this user"));
+    }
+
+    try {
+        await User.findByIdAndDelete(req.params.userId);
+        res.status(200).json("User has been deleted")
+    } catch (error) {
+        next(error);
+    }
+}

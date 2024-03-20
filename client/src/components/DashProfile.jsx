@@ -139,7 +139,7 @@ function DashProfile() {
         <h2 className='ml-5 underline font-semibold text-xl mt-10'>Clothing Sizes</h2>
         <div className='mt-3 flex gap-6 justify-center'>
           <div className='flex gap-2 justify-center'>
-            <div className='flex gap-2 '>
+            <div className='flex gap-2 justy-center'>
               <div>
                 <Label value='Shirt size' />
                 {/* <TextInput type='text' id='shirt_size' placeholder='S,M,L,XL --> 6XL' defaultValue={currentUser.currentUser.shirt_size} /> */}
@@ -214,7 +214,7 @@ function DashProfile() {
           </div>
         </div>
         <div>
-          <div className='flex gap-2 justify-center mx-auto mt-5'>
+          <div className='flex gap-3 justify-center mx-auto mt-5'>
               <div>
                 <Label value='Pants Width' />
                 {/* <TextInput type='text' id='pants_width' placeholder='28 to 46' defaultValue={currentUser.currentUser.pants_width} /> */}
