@@ -81,7 +81,9 @@ export const signin = async (req, res, next) => {
         }
         
         //create token if all credentials are correct
-        const token = jwt.sign({ id: validUser._id}, process.env.JWT_SECRET);
+        const token = jwt.sign(
+            { id: validUser._id, isAdmin: validUser.isAdmin}, 
+            process.env.JWT_SECRET);
 
         //sperate encrypted password from the rest of the response
         const { password: pass, ...rest} = validUser._doc;
