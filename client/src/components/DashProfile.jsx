@@ -15,7 +15,7 @@ import { HiOutlineExclamationCircle } from 'react-icons/hi'
 function DashProfile() {
 
   // Access global user data from signed in user
-  const {currentUser, error} = useSelector(state => state.user);
+  const { currentUser, error, loading } = useSelector(state => state.user);
 
   //Create form data to send to DB for updating
   const [formData, setFormData] = useState({});
@@ -137,7 +137,7 @@ function DashProfile() {
       <form onSubmit={handleSubmit} className='flex flex-col'>
         <h2 className='ml-5 underline font-semibold text-xl'>Account Info</h2>
         <div className='mt-5 flex gap-6 justify-center'>
-          <div className='flex gap-2 justify-center'>
+          <div className='flex mx-auto gap-2 justify-center'>
           <div className='w-40'>
             <Label value='First Name' />
             <TextInput 
@@ -342,12 +342,16 @@ function DashProfile() {
               </div>
             </div>
         </div>
-        <Button type='submit' gradientDuoTone='purpleToBlue' className='mt-8 w-60 mx-auto' size='lg' outline>
-            Update
+        <Button disabled={loading} type='submit' gradientDuoTone='purpleToBlue' className='mt-8 w-60 mx-auto' size='lg' outline>
+            {loading ? 'Loading...' : 'Update'}
         </Button>
       </form>
       <div className='mt-6 mb-20 text-red-500 font-semibold flex justify-between px-12'>
-        <span onClick={() => setShowModal(true)} className='cursor-pointer'>Delete Account</span>
+        {
+          currentUser.isAdmin && (
+            <span onClick={() => setShowModal(true)} className='cursor-pointer'>Delete Account</span>
+          )
+        }
         <span className='cursor-pointer' onClick={handleSignOut}>Sign Out</span>
       </div>
       {updateUserSuccess && (

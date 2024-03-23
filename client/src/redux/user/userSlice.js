@@ -18,7 +18,7 @@ const userSlice = createSlice({
         // access the payload data when user signs in
         signInSuccess: (state, action) => {
             state.currentUser = action.payload;
-            state.loading = true;
+            state.loading = false;
             state.error = null;
         },
         signInFailure: (state, action) => {

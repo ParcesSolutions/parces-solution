@@ -4,14 +4,20 @@ import jwt from "jsonwebtoken";
 import {errorHandler} from '../utils/error.js';
 
 export const signup = async (req, res, next) => {
-    let { a_number, employee_number, password, firstname, lastname, email, address, shirt_size, sweatshirt_size, shorts_width, pants_width, pants_length, gender } = req.body;
-
-    // a_number = a_number.toLowerCase();
-    // firstname = firstname.toLowerCase();
-    // lastname = lastname.toLowerCase();
-    // shirt_size = shirt_size.toLowerCase();
-    // sweatshirt_size = sweatshirt_size.toLowerCase();
-    // gender = gender.toLowerCase();
+    let { 
+        a_number, 
+        employee_number, 
+        password, firstname, 
+        lastname, 
+        email, 
+        address, 
+        shirt_size, 
+        sweatshirt_size, 
+        shorts_width, 
+        pants_width, 
+        pants_length, 
+        gender 
+    } = req.body;
 
     /* encrypt password for security */
     const salt = bcryptjs.genSaltSync(10);

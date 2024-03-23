@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import DashSidebar from '../components/DashSidebar';
 import DashProfile from '../components/DashProfile';
+import DashUniforms from '../components/DashUniforms';
 
 function Dashboard() {
   const location = useLocation(); //gives access to URL
@@ -19,8 +20,10 @@ function Dashboard() {
         {/* Sidebar */}
         <DashSidebar />
       </div>
-        {/* if tab is profile then show profile */}
-        {tab ==='profile' && <DashProfile />}
+      {/* if tab is profile then show profile */}
+      {tab ==='profile' && <DashProfile />}
+      {tab === 'uniforms' && <DashUniforms className=""/>}
+      
     </div>
   )
 }

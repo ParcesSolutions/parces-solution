@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import parces_small_logo from '../logo/parces_small_logo.jpg';
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
@@ -8,15 +8,9 @@ import { signInSuccess, signInStart, signInFailure } from '../redux/user/userSli
 
 function SignIn() {
 
-    // const {currentUser} = useSelector(state => state.user); //get user info if singed in
-
-    // if (currentUser){
-    //     navigate('/uniforms');
-    // }
-
     /* state to manage form data */
     const [formData, setFormData] = useState({});
-    const {loading, error: errorMessage} = useSelector(state => state.user);
+    const { loading, error: errorMessage } = useSelector(state => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
