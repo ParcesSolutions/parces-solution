@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import DashSidebar from '../components/DashSidebar';
 import DashProfile from '../components/DashProfile';
 import DashUniforms from '../components/DashUniforms';
+import DashInventory from '../components/DashInventory';
 
 function Dashboard() {
   const location = useLocation(); //gives access to URL
@@ -20,9 +21,12 @@ function Dashboard() {
         {/* Sidebar */}
         <DashSidebar />
       </div>
-      {/* if tab is profile then show profile */}
+      {/* Profile */}
       {tab ==='profile' && <DashProfile />}
-      {tab === 'uniforms' && <DashUniforms className=""/>}
+      {/* Uniforms */}
+      {tab === 'uniforms' && <DashUniforms />}
+      {/* Inventory for Admin*/}
+      {tab === 'inventory' && <DashInventory />}
       
     </div>
   )

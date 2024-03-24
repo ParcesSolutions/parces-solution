@@ -48,8 +48,15 @@ function Header() {
           >
             <Dropdown.Header>
               <span className='block text-sm font-bold'>{currentUser.firstname} {currentUser.lastname}</span>
-              <span className='block text-sm'>A-Num: {currentUser.a_number}</span>
-              <span className='block text-sm'>Employee Num: {currentUser.employee_number}</span>
+              <div className="flex">
+                <span className='block text-sm'>A Number: </span>
+                <span className='block text-sm font-bold'> {currentUser.a_number}</span>
+              </div>
+              <div className="flex">
+              <span className='block text-sm'>Employee Number: </span>
+                <span className='block text-sm font-bold'> {currentUser.employee_number}</span>
+              </div>
+              
             </Dropdown.Header>
             <Link to='/dashboard?tab=profile'>
               <Dropdown.Item>Edit Profile</Dropdown.Item>

@@ -346,12 +346,12 @@ function DashProfile() {
             {loading ? 'Loading...' : 'Update'}
         </Button>
       </form>
-      <div className='mt-6 mb-20 text-red-500 font-semibold flex justify-between px-12'>
-        {
+      <div className='mt-6 mb-20 text-red-500 font-semibold flex mx-auto justify-center'>
+        {/* {
           currentUser.isAdmin && (
             <span onClick={() => setShowModal(true)} className='cursor-pointer'>Delete Account</span>
           )
-        }
+        } */}
         <span className='cursor-pointer' onClick={handleSignOut}>Sign Out</span>
       </div>
       {updateUserSuccess && (

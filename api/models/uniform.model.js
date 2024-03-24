@@ -8,7 +8,7 @@ const uniformSchema = new mongoose.Schema({
     },
     gender: { 
         type: String, 
-        enum: ['Male', 'Female'] 
+        enum: ['M', 'F'] 
     },
     size: {
       type: {
@@ -36,4 +36,4 @@ const uniformSchema = new mongoose.Schema({
 
 const Uniform = mongoose.model('Uniform', uniformSchema);
 
-export default Uniforms;
+export default Uniform;
