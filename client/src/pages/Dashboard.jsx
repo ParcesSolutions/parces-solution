@@ -4,6 +4,7 @@ import DashSidebar from '../components/DashSidebar';
 import DashProfile from '../components/DashProfile';
 import DashUniforms from '../components/DashUniforms';
 import DashInventory from '../components/DashInventory';
+import DashOrder from '../components/DashOrder';
 
 function Dashboard() {
   const location = useLocation(); //gives access to URL
@@ -25,8 +26,11 @@ function Dashboard() {
       {tab ==='profile' && <DashProfile />}
       {/* Uniforms */}
       {tab === 'uniforms' && <DashUniforms />}
+      {/* User Order*/}
+      {tab === 'order' && <DashOrder />}
       {/* Inventory for Admin*/}
       {tab === 'inventory' && <DashInventory />}
+      
       
     </div>
   )

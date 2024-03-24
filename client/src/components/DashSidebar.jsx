@@ -65,14 +65,14 @@ function DashSidebar() {
                             Uniforms
                         </Sidebar.Item>
                     </Link>
-                <Link to='/dashboard?tab=cart'>
+                <Link to='/dashboard?tab=order'>
                     <Sidebar.Item 
-                        active={tab === 'cart'} 
+                        active={tab === 'order'} 
                         icon={IoCartOutline} 
                         labelColor="dark"
                         className='my-2'
                     >
-                        Cart
+                        Order
                     </Sidebar.Item>
                 </Link>
                 {currentUser.isAdmin && (
