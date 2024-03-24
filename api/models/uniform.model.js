@@ -34,6 +34,6 @@ const uniformSchema = new mongoose.Schema({
   });
 
 
-const Uniforms = mongoose.model('Uniforms', uniformSchema);
+const Uniform = mongoose.model('Uniform', uniformSchema);
 
 export default Uniforms;
