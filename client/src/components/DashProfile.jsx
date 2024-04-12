@@ -342,7 +342,7 @@ function DashProfile() {
               </div>
             </div>
         </div>
-        <Button disabled={loading} type='submit' gradientDuoTone='purpleToBlue' className='mt-8 w-60 mx-auto' size='lg' outline>
+        <Button disabled={loading} type='submit' className='mt-8 w-60 mx-auto bg-blue-500 hover:bg-gradient-to-r from-blue-700 via-blue-700 to-blue-700' size='lg' outline>
             {loading ? 'Loading...' : 'Update'}
         </Button>
       </form>

@@ -117,7 +117,7 @@ function SignIn() {
                     </Button>
                 </form>
                 <div className='mt-4 flex gap-1 justify-center'>
-                    <p>Dont have an account?</p>
+                    <p>First time logging in?</p>
                     <Link to='/sign-up' className='text-blue-600 font-bold'>Sign Up</Link>
                 </div>
                 {

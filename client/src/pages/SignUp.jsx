@@ -54,24 +54,6 @@ function SignUp() {
         else if(formData.confirmPassword == null){
             return setErrorMessage('Please confirm password');
         }
-        // else if(Number(formData.pants_width) < 28 || Number(formData.pants_width) > 46) {
-        //     return setErrorMessage('Pants width size must be between 28 to 46');
-        // }
-        // else if(Number(formData.pants_length) < 28 || Number(formData.pants_length) > 46) {
-        //     return setErrorMessage('Pants length size must be between 28 to 42');
-        // }
-        // else if(Number(formData.shorts_width) < 28 || Number(formData.shorts_width) > 46) {
-        //     return setErrorMessage('Shorts width size must be between 28 to 46');
-        // }
-        // else if(formData.shirt_size.toLowerCase() != "s" || formData.shirt_size.toLowerCase() != "m" || formData.shirt_size.toLowerCase() != "l" || formData.shirt_size.toLowerCase() != "xl" || formData.shirt_size.toLowerCase() != "xxl" || formData.shirt_size.toLowerCase() != "2xl" || formData.shirt_size.toLowerCase() != "xxxl" || formData.shirt_size.toLowerCase() != "3xl" || formData.shirt_size.toLowerCase() != "4xl" || formData.shirt_size.toLowerCase() != "xxxxl" || formData.shirt_size.toLowerCase() != "5xl" || formData.shirt_size.toLowerCase() != "xxxxxl" || formData.shirt_size.toLowerCase() != "6xl" || formData.shirt_size.toLowerCase() != "xxxxxxl") {
-        //     return setErrorMessage('Shirt sizes must be between S to 6XL');
-        // }
-        // else if(formData.sweatshirt_size.toLowerCase() != "s" || formData.sweatshirt_size.toLowerCase() != "m" || formData.sweatshirt_size.toLowerCase() != "l" || formData.sweatshirt_size.toLowerCase() != "xl" || formData.sweatshirt_size.toLowerCase() != "xxl" || formData.sweatshirt_size.toLowerCase() != "2xl" || formData.sweatshirt_size.toLowerCase() != "xxxl" || formData.sweatshirt_size.toLowerCase() != "3xl" || formData.sweatshirt_size.toLowerCase() != "4xl" || formData.sweatshirt_size.toLowerCase() != "xxxxl" || formData.sweatshirt_size.toLowerCase() != "5xl" || formData.sweatshirt_size.toLowerCase() != "xxxxxl" || formData.sweatshirt_size.toLowerCase() != "6xl" || formData.sweatshirt_size.toLowerCase() != "xxxxxxl") {
-        //     return setErrorMessage('Sweatshirt sizes must be between S to 6XL');
-        // }
-        // else if(formData.gender.toLowerCase() != "m" || formData.gender.toLowerCase() != "f" || formData.gender.toLowerCase() != "n" || formData.gender.toLowerCase() != "neutral") {
-        //     return setErrorMessage('Please enter a gender of either M, F or Neutral');
-        // }
 
         try {
             setLoading(true);
