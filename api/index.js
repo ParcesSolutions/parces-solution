@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
+import uniformRoutes from './routes/uniform.route.js';
 import cookieParser from 'cookie-parser';
 
 /*access env file*/
@@ -34,6 +35,7 @@ app.listen(3000, () => {
 /* routes */
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/uniform', uniformRoutes);
 
 /*Middleware to handle errors for signup route*/
 app.use((err, req, res, next) => {
