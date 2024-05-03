@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Button, Navbar, Dropdown, Avatar } from 'flowbite-react';
+import { Navbar, Dropdown, Avatar } from 'flowbite-react';
 import parces_small_logo from '../logo/parces_small_logo.jpg';
 import { useSelector, useDispatch } from 'react-redux';
 import {AiOutlineUser} from 'react-icons/ai';
@@ -70,11 +70,11 @@ function Header() {
         ): 
         (
           <>
-            <Link to='/sign-in'>
+            {/* <Link to='/sign-in'>
               <Button className='bg-blue-800 hover:bg-blue-900 focus:ring-2 focus:ring-blue-500 text-white' outline color='hover:bg-blue-900' pill>
                 Uniform Portal
               </Button>
-            </Link>
+            </Link> */}
             <Navbar.Toggle />
           </>
         )}
@@ -86,17 +86,17 @@ function Header() {
         (
         <Navbar.Collapse className='px-2 self-center'>
           <Navbar.Link active={path === "/"}>
-            <Link to='/'>
+            <Link to='/' className='text-xl'>
               Home
             </Link>
           </Navbar.Link>
-          <Navbar.Link active={path === "/projects"}>
-            <Link to='/projects'>
+          {/* <Navbar.Link active={path === "/projects"}>
+            <Link to='/projects' className='text-lg'>
               Projects
             </Link>
-          </Navbar.Link>
+          </Navbar.Link> */}
           <Navbar.Link active={path === "/services"}>
-            <Link to='/services'>
+            <Link to='/services' className='text-xl'>
               Services
             </Link>
           </Navbar.Link>
